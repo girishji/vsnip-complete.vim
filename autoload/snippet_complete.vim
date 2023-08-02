@@ -5,6 +5,7 @@ vim9script
 export var options: dict<any> = {
     enable: true,
     maxCount: 10,
+    adaptNonKeyword: false,
     dup: true,
 }
 
@@ -34,17 +35,32 @@ def GetItems(): dict<any>
     if prefix->empty() || items->empty()
 	return { startcol: -2, items: [] }
     endif
-    var filtered = items->copy()->filter((_, v) => v.abbr[0] ==# prefix[0])
-    var startcol = col('.') - prefix->strlen()
+    var prefixlen = prefix->len()
+    var filtered = items->copy()->filter((_, v) => v.abbr->slice(0, prefixlen) ==? prefix)
+    var startcol = col('.') - prefixlen
+    var kwprefix = line->matchstr('\k\+$')
+    var lendiff = prefixlen - kwprefix->len()
     if !filtered->empty()
+	if options.adaptNonKeyword && !kwprefix->empty() && lendiff > 0
+	    # When completing '#if', LSP supplies completions appropriate
+	    # items but without '#'. To mix vsnip and LSP items '#' needs to
+	    # be removed from snippet (in 'user_data') and 'word'
+	    for item in filtered
+		item.word = item.word->slice(lendiff)
+		var user_data = item.user_data->json_decode()
+		var snippet = user_data.vsnip.snippet
+		if !snippet->empty()
+		    snippet[0] = snippet[0]->slice(lendiff)
+		endif
+		item.user_data = user_data->json_encode()
+	    endfor
+	    startcol += lendiff
+	endif
 	return { startcol: startcol, items: filtered }
     endif
-    var kwprefix = line->matchstr('\k\+$')
-    if kwprefix->empty()
-	return { startcol: startcol, items: items }
-    endif
+
     filtered = items->copy()->filter((_, v) => v.abbr =~ '^\k')
-    if !filtered->empty()
+    if !filtered->empty() && !kwprefix->empty()
 	return { startcol: col('.') - kwprefix->strlen(), items: filtered }
     endif
     return { startcol: startcol, items: items }

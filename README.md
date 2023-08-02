@@ -40,14 +40,24 @@ Or use Vim's builtin package manager.
 
 # Configuration
 
+Following options are supported.
+
+Option|Type|Description
+------|----|-----------
+`enable`|`Boolean`|Enable this extension. Default is `true`.
+`priority`|`Number`|Higher priority items are shown at the top. Default is `11`.
+`maxCount`|`Number`|Maximum number of items shown. Default is `10`.
+`adaptNonKeyword`|`Boolean`|(experimental) When completing '#i' candidates sourced from snippets adjust completion such that they are compatible with items starting with 'i' as returned by LSP. Default is `false`.
+
 Default options are as follows.
 
 ```
 vim9script
 export var options: dict<any> = {
-    enable: true,    # 'false' to disable this extension
-    priority: 11,    # Higher priority items are shown at the top
-    maxCount: 10,    # Maximum number of items shown
+    enable: true,
+    priority: 11,
+    maxCount: 10,
+    adaptNonKeyword: false,
 }
 ```
 
