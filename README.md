@@ -47,7 +47,7 @@ Option|Type|Description
 `enable`|`Boolean`|Enable this extension. Default is `true`.
 `priority`|`Number`|Higher priority items are shown at the top. Default is `11`.
 `maxCount`|`Number`|Maximum number of items shown. Default is `10`.
-`adaptNonKeyword`|`Boolean`|(experimental) When completing '#i' candidates sourced from snippets adjust completion such that they are compatible with items starting with 'i' as returned by LSP. Default is `false`.
+`adaptNonKeyword`|`Boolean`|(experimental) When completing '#i' candidates sourced from snippets, adjust completion such that they are compatible with items starting with 'i' as returned by LSP. Default is `false`.
 
 Default options are as follows.
 

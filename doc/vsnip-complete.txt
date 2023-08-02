@@ -63,7 +63,7 @@ priority 		|Number| option. Higher priority items are shown at
 			the top. Default is `11`.
 maxCount 		|Number| option. Maximum number of items shown.
 			Default is `10`.
-adaptNonKeyword 	|Boolean| option. (experimental) When completing '#i'
+adaptNonKeyword 	|Boolean| option. (experimental) When completing '#i',
 			adjust snippet sourced items such that they are
 			compatible with items starting with 'i' as returned by
 			LSP. Default is `false`.
