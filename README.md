@@ -1,3 +1,11 @@
+> [!CAUTION]
+> THIS PLUGIN IS NO LONGER NEEDED.
+> The functionality is already merged into [vimcomplete](https://github.com/girishji/vimcomplete).
+
+------
+------
+
+
 #### Vsnip Snippet Completion for Vimcomplete Plugin
 
 This plugin provides snippet completion for
